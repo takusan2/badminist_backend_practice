@@ -3,8 +3,8 @@ package repository
 import (
 	"github.com/jinzhu/gorm"
 
-	"github.com/takuya-okada-01/yuzupro-backend/domain"
-	"github.com/takuya-okada-01/yuzupro-backend/utils/crypto"
+	"github.com/takuya-okada-01/badminist-backend/domain"
+	"github.com/takuya-okada-01/badminist-backend/utils/crypto"
 )
 
 type userRepository struct {

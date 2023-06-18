@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/takuya-okada-01/yuzupro-backend/domain"
-	"github.com/takuya-okada-01/yuzupro-backend/infrastructure/database"
+	"github.com/takuya-okada-01/badminist-backend/domain"
+	"github.com/takuya-okada-01/badminist-backend/infrastructure/database"
 )
 
 func TestUserInsertAndSelect(t *testing.T) {

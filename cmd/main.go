@@ -8,11 +8,11 @@ import (
 	"github.com/gin-contrib/sessions/cookie"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
-	"github.com/takuya-okada-01/yuzupro-backend/config"
-	"github.com/takuya-okada-01/yuzupro-backend/controller"
-	"github.com/takuya-okada-01/yuzupro-backend/infrastructure/database"
-	user_repository "github.com/takuya-okada-01/yuzupro-backend/infrastructure/repository/user_repository"
-	auth_usecase "github.com/takuya-okada-01/yuzupro-backend/usecase/auth_usecase"
+	"github.com/takuya-okada-01/badminist-backend/config"
+	"github.com/takuya-okada-01/badminist-backend/controller"
+	"github.com/takuya-okada-01/badminist-backend/infrastructure/database"
+	user_repository "github.com/takuya-okada-01/badminist-backend/infrastructure/repository/user_repository"
+	auth_usecase "github.com/takuya-okada-01/badminist-backend/usecase/auth_usecase"
 )
 
 func main() {
