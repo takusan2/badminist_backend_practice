@@ -48,12 +48,4 @@ erDiagram
         uuid(FK) communityID
         timestamp createdAt
     }
-
-    DoublesMatche {
-        int(PK) id
-        uuid(FK) player1ID
-        uuid(FK) player2ID
-        uuid(FK) communityID
-        timestamp createdAt
-    }
 ```
