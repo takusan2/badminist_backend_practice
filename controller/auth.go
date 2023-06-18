@@ -2,7 +2,7 @@ package controller
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/takuya-okada-01/yuzupro-backend/domain"
+	"github.com/takuya-okada-01/badminist-backend/domain"
 )
 
 type authController struct {
