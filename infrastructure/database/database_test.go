@@ -9,5 +9,4 @@ func TestConnect(t *testing.T) {
 	if db == nil {
 		t.Errorf("Connect() == %v, want %v", db, "not nil")
 	}
-	db.Close()
 }

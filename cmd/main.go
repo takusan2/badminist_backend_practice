@@ -11,7 +11,7 @@ import (
 	"github.com/takuya-okada-01/badminist-backend/config"
 	"github.com/takuya-okada-01/badminist-backend/controller"
 	"github.com/takuya-okada-01/badminist-backend/infrastructure/database"
-	user_repository "github.com/takuya-okada-01/badminist-backend/infrastructure/repository/user_repository"
+	user_repository "github.com/takuya-okada-01/badminist-backend/infrastructure/repository/user"
 	auth_usecase "github.com/takuya-okada-01/badminist-backend/usecase/auth_usecase"
 )
 
@@ -19,7 +19,6 @@ func main() {
 	godotenv.Load(config.ProjectRootPath + "/.env")
 
 	db := database.Connect()
-	defer db.Close()
 	defer fmt.Print("db closed\n")
 
 	router := gin.Default()
