@@ -32,16 +32,16 @@ func (r Role) String() string {
 
 type IOwnerRepository interface {
 	InsertOwner(owner *Owner) error
-	SelectOwner(CommunityID string) (Owner, error)
-	SelectOwners(UserID string) ([]Owner, error)
+	SelectOwner(owner Owner) (Owner, error)
+	SelectOwnersByCommunityID(CommunityID string) ([]Owner, error)
 	UpdateOwner(owner *Owner) error
-	DeleteOwner(CommunityID string) error
+	DeleteOwner(owner Owner) error
 }
 
 type IOwnerUseCase interface {
 	InsertOwner(ctx *gin.Context, UserID string, CommunityID string, Role string) error
 	SelectOwner(ctx *gin.Context, UserID string, CommunityID string) (Owner, error)
-	SelectOwners(ctx *gin.Context, UserID string) ([]Owner, error)
+	SelectOwnersByCommunityID(ctx *gin.Context, UserID string) ([]Owner, error)
 	UpdateOwner(ctx *gin.Context, UserID string, CommunityID string, Role string) error
 	DeleteOwner(ctx *gin.Context, UserID string, CommunityID string) error
 }

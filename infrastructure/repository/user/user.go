@@ -1,10 +1,9 @@
 package repository
 
 import (
-	"github.com/jinzhu/gorm"
-
 	"github.com/takuya-okada-01/badminist-backend/domain"
 	"github.com/takuya-okada-01/badminist-backend/utils/crypto"
+	"gorm.io/gorm"
 )
 
 type userRepository struct {
@@ -38,7 +37,7 @@ func (u *userRepository) SelectUser(id string) (domain.User, error) {
 }
 
 func (u *userRepository) UpdateUser(user *domain.User) error {
-	err := u.db.Model(&user).Where("id = ?", user.ID).Update(user).Error
+	err := u.db.Model(&user).Where("id = ?", user.ID).Updates(user).Error
 	return err
 }
 
