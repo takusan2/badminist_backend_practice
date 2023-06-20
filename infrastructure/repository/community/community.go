@@ -29,9 +29,9 @@ func (c *communityRepository) SelectCommunity(id string) (domain.Community, erro
 	return community, err
 }
 
-func (c *communityRepository) SelectCommunities(UserID string) ([]domain.Community, error) {
+func (c *communityRepository) SelectCommunitiesByUserID(userID string) ([]domain.Community, error) {
 	var communities []domain.Community
-	err := c.db.Select("*").Where("user_id = ?", UserID).Find(&communities).Error
+	err := c.db.Select("*").Where("user_id = ?", userID).Find(&communities).Error
 	return communities, err
 }
 

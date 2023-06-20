@@ -12,7 +12,7 @@ import (
 	"github.com/takuya-okada-01/badminist-backend/controller"
 	"github.com/takuya-okada-01/badminist-backend/infrastructure/database"
 	user_repository "github.com/takuya-okada-01/badminist-backend/infrastructure/repository/user"
-	auth_usecase "github.com/takuya-okada-01/badminist-backend/usecase/auth_usecase"
+	auth_usecase "github.com/takuya-okada-01/badminist-backend/usecase/auth"
 )
 
 func main() {

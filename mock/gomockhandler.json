@@ -1,0 +1,49 @@
+{
+	"mocks": {
+		"commynity.go": {
+			"checksum": "4i8h94W+gG0hxdpFOewQ/A==",
+			"source_checksum": "irWximaqJvkuRD9Olvmrnw==",
+			"mode": "SOURCE_MODE",
+			"source_mode_runner": {
+				"source": "/Users/okadatakuya/my_folder/dev/my_app/badminist/backend/domain/community.go",
+				"destination": "../mock/commynity.go"
+			}
+		},
+		"match.go": {
+			"checksum": "FY2EHkjpf3hXyMwFqZHOww==",
+			"source_checksum": "SZtlgJTACe6vqtKiTsVfeg==",
+			"mode": "SOURCE_MODE",
+			"source_mode_runner": {
+				"source": "/Users/okadatakuya/my_folder/dev/my_app/badminist/backend/domain/match.go",
+				"destination": "../mock/match.go"
+			}
+		},
+		"owner.go": {
+			"checksum": "n0qxxodFoep/4uYxFUsZuw==",
+			"source_checksum": "UzJ3tjKRm76ey0zw/vOhfQ==",
+			"mode": "SOURCE_MODE",
+			"source_mode_runner": {
+				"source": "/Users/okadatakuya/my_folder/dev/my_app/badminist/backend/domain/owner.go",
+				"destination": "../mock/owner.go"
+			}
+		},
+		"player.go": {
+			"checksum": "L4NzeAR0g8Q2b0oIQvZmXA==",
+			"source_checksum": "9c9IgIK5PYO2uAgUdoNo2g==",
+			"mode": "SOURCE_MODE",
+			"source_mode_runner": {
+				"source": "/Users/okadatakuya/my_folder/dev/my_app/badminist/backend/domain/player.go",
+				"destination": "../mock/player.go"
+			}
+		},
+		"user.go": {
+			"checksum": "vzRe+wgttXxsQtAZG1MTtQ==",
+			"source_checksum": "k5Be50kEUDtqPriEVUaMmw==",
+			"mode": "SOURCE_MODE",
+			"source_mode_runner": {
+				"source": "/Users/okadatakuya/my_folder/dev/my_app/badminist/backend/domain/user.go",
+				"destination": "../mock/user.go"
+			}
+		}
+	}
+}

@@ -27,7 +27,7 @@ func (p *Player) BeforeCreate(tx *gorm.DB) (err error) {
 }
 
 type IPlayerRepository interface {
-	InsertPlayer(communityID string, player *Player) (string, error)
+	InsertPlayer(player *Player) (string, error)
 	SelectPlayer(id string) (Player, error)
 	SelectPlayersByCommunityID(communityID string) ([]Player, error)
 	UpdatePlayer(player *Player) error
@@ -35,7 +35,7 @@ type IPlayerRepository interface {
 }
 
 type IPlayerUseCase interface {
-	InsertPlayer(ctx *gin.Context, communityID string, player *Player) (string, error)
+	InsertPlayer(ctx *gin.Context, player *Player) (string, error)
 	SelectPlayer(ctx *gin.Context, id string) (Player, error)
 	SelectPlayersByCommunityID(ctx *gin.Context, communityID string) ([]Player, error)
 	UpdatePlayer(ctx *gin.Context, player *Player) error

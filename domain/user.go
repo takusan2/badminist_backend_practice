@@ -8,7 +8,7 @@ import (
 	"gorm.io/gorm"
 )
 
-type tokenString = string
+type TokenString = string
 
 type User struct {
 	ID           string    `gorm:"type:varchar(36);primary_key;"`
@@ -39,7 +39,7 @@ type IUserUseCase interface {
 }
 
 type IAuthUseCase interface {
-	SignUpWithEmailAndPassword(ctx *gin.Context, email string, password string) (tokenString, error)
-	LoginWithEmailAndPassword(ctx *gin.Context, email string, password string) (tokenString, error)
+	SignUpWithEmailAndPassword(ctx *gin.Context, email string, password string) (TokenString, error)
+	LoginWithEmailAndPassword(ctx *gin.Context, email string, password string) (TokenString, error)
 	Logout(ctx *gin.Context) error
 }

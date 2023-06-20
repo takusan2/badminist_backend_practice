@@ -13,9 +13,8 @@ func NewPlayerRepository(db *gorm.DB) domain.IPlayerRepository {
 	return &playerRepository{db: db}
 }
 
-func (p *playerRepository) InsertPlayer(communityID string, player *domain.Player) (string, error) {
+func (p *playerRepository) InsertPlayer(player *domain.Player) (string, error) {
 	var err error
-	player.CommunityID = communityID
 
 	result := p.db.Table("players").Create(player)
 	err = result.Error

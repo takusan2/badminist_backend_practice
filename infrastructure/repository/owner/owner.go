@@ -30,6 +30,12 @@ func (o *ownerRepository) SelectOwner(owner domain.Owner) (domain.Owner, error) 
 	return ownerResult, err
 }
 
+func (o *ownerRepository) SelectOwnerByUserIDAndCommunityID(userID, communityId string) (domain.Owner, error) {
+	var owner domain.Owner
+	err := o.db.Select("*").Where(map[string]interface{}{"user_id": userID, "community_id": communityId}).First(&owner).Error
+	return owner, err
+}
+
 func (o *ownerRepository) SelectOwnersByCommunityID(communityId string) ([]domain.Owner, error) {
 	var owners []domain.Owner
 	err := o.db.Select("*").Where("community_id = ?", communityId).Find(&owners).Error

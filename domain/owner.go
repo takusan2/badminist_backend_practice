@@ -16,6 +16,7 @@ type Role int
 
 const (
 	Admin Role = iota
+	Staff
 	Member
 )
 
@@ -23,6 +24,8 @@ func (r Role) String() string {
 	switch r {
 	case Admin:
 		return "admin"
+	case Staff:
+		return "staff"
 	case Member:
 		return "member"
 	default:
@@ -33,15 +36,16 @@ func (r Role) String() string {
 type IOwnerRepository interface {
 	InsertOwner(owner *Owner) error
 	SelectOwner(owner Owner) (Owner, error)
-	SelectOwnersByCommunityID(CommunityID string) ([]Owner, error)
+	SelectOwnersByCommunityID(communityID string) ([]Owner, error)
+	SelectOwnerByUserIDAndCommunityID(userID string, communityID string) (Owner, error)
 	UpdateOwner(owner *Owner) error
 	DeleteOwner(owner Owner) error
 }
 
 type IOwnerUseCase interface {
-	InsertOwner(ctx *gin.Context, UserID string, CommunityID string, Role string) error
-	SelectOwner(ctx *gin.Context, UserID string, CommunityID string) (Owner, error)
+	InsertOwner(ctx *gin.Context, userID string, communityID string, Role string) error
+	SelectOwner(ctx *gin.Context, userID string, communityID string) (Owner, error)
 	SelectOwnersByCommunityID(ctx *gin.Context, UserID string) ([]Owner, error)
-	UpdateOwner(ctx *gin.Context, UserID string, CommunityID string, Role string) error
-	DeleteOwner(ctx *gin.Context, UserID string, CommunityID string) error
+	UpdateOwner(ctx *gin.Context, userID string, communityID string, Role string) error
+	DeleteOwner(ctx *gin.Context, userID string, communityID string) error
 }
