@@ -28,7 +28,9 @@ func Test_userUseCase_UpdateUser(t *testing.T) {
 		{
 			name: "not exists user",
 			prepareMockFn: func(m *mock_domain.MockIUserRepository) {
-				m.EXPECT().SelectUser("testID").Return(domain.User{}, fmt.Errorf("not exists user"))
+				m.EXPECT().
+					SelectUser(domain.UserCriteria{ID: "testID", IDIsNotNull: true}).
+					Return(domain.User{}, fmt.Errorf("not exists user"))
 			},
 			args: args{
 				ctx:  &gin.Context{},

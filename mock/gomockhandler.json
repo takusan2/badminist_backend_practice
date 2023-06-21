@@ -1,8 +1,8 @@
 {
 	"mocks": {
 		"commynity.go": {
-			"checksum": "4i8h94W+gG0hxdpFOewQ/A==",
-			"source_checksum": "irWximaqJvkuRD9Olvmrnw==",
+			"checksum": "QVmLthPTN3yqRnt6ErGXXA==",
+			"source_checksum": "RlKWwmmJICcLqL60UHqPkA==",
 			"mode": "SOURCE_MODE",
 			"source_mode_runner": {
 				"source": "/Users/okadatakuya/my_folder/dev/my_app/badminist/backend/domain/community.go",
@@ -10,8 +10,8 @@
 			}
 		},
 		"match.go": {
-			"checksum": "FY2EHkjpf3hXyMwFqZHOww==",
-			"source_checksum": "SZtlgJTACe6vqtKiTsVfeg==",
+			"checksum": "Kj72WwjFyMzl0rLLdFYemA==",
+			"source_checksum": "iuhj6y1hKA0trApk4mAMvQ==",
 			"mode": "SOURCE_MODE",
 			"source_mode_runner": {
 				"source": "/Users/okadatakuya/my_folder/dev/my_app/badminist/backend/domain/match.go",
@@ -19,8 +19,8 @@
 			}
 		},
 		"owner.go": {
-			"checksum": "n0qxxodFoep/4uYxFUsZuw==",
-			"source_checksum": "UzJ3tjKRm76ey0zw/vOhfQ==",
+			"checksum": "hCR2tpucUIZel8knumEGSw==",
+			"source_checksum": "gAT6coZea+MWkBqk74ybuw==",
 			"mode": "SOURCE_MODE",
 			"source_mode_runner": {
 				"source": "/Users/okadatakuya/my_folder/dev/my_app/badminist/backend/domain/owner.go",
@@ -28,8 +28,8 @@
 			}
 		},
 		"player.go": {
-			"checksum": "L4NzeAR0g8Q2b0oIQvZmXA==",
-			"source_checksum": "9c9IgIK5PYO2uAgUdoNo2g==",
+			"checksum": "vBTfjeiitenP04ghSe2edg==",
+			"source_checksum": "UhivIkJftCw5HW/daDEOyg==",
 			"mode": "SOURCE_MODE",
 			"source_mode_runner": {
 				"source": "/Users/okadatakuya/my_folder/dev/my_app/badminist/backend/domain/player.go",
@@ -37,8 +37,8 @@
 			}
 		},
 		"user.go": {
-			"checksum": "vzRe+wgttXxsQtAZG1MTtQ==",
-			"source_checksum": "k5Be50kEUDtqPriEVUaMmw==",
+			"checksum": "orevDJx7O6eP33eGVHhDFQ==",
+			"source_checksum": "4+xZ4bt+oNtx1gVVg+dg6g==",
 			"mode": "SOURCE_MODE",
 			"source_mode_runner": {
 				"source": "/Users/okadatakuya/my_folder/dev/my_app/badminist/backend/domain/user.go",

@@ -21,10 +21,19 @@ func (c *Community) BeforeCreate(tx *gorm.DB) (err error) {
 	return nil
 }
 
+type CommunityCriteria struct {
+	ID                   string
+	IDIsNotNull          bool
+	Name                 string
+	NameIsNotNull        bool
+	Description          string
+	DescriptionIsNotNull bool
+}
+
 type ICommunityRepository interface {
 	InsertCommunity(community *Community) (string, error)
-	SelectCommunity(id string) (Community, error)
-	SelectCommunitiesByUserID(userID string) ([]Community, error)
+	SelectCommunity(criteria CommunityCriteria) (Community, error)
+	SelectCommunities(criteria CommunityCriteria) ([]Community, error)
 	UpdateCommunity(community *Community) error
 	DeleteCommunity(id string) error
 }

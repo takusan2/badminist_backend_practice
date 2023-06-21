@@ -28,12 +28,19 @@ func Test_communityUseCase_UpdateCommunity(t *testing.T) {
 		{
 			"not exists community",
 			func(mcr *mock_domain.MockICommunityRepository, mor *mock_domain.MockIOwnerRepository) {
-				mor.EXPECT().SelectOwnerByUserIDAndCommunityID("testUserID", "testCommunityID").Return(domain.Owner{
+				mor.EXPECT().SelectOwner(domain.OwnerCriteria{
+					UserID:               "testUserID",
+					UserIDIsNotNull:      true,
+					CommunityID:          "testCommunityID",
+					CommunityIDIsNotNull: true,
+				}).Return(domain.Owner{
 					UserID:      "testUserID",
 					CommunityID: "testCommunityID",
 					Role:        domain.Admin.String(),
 				}, nil)
-				mcr.EXPECT().SelectCommunity("testCommunityID").Return(domain.Community{}, fmt.Errorf("not exists community"))
+				mcr.EXPECT().
+					SelectCommunity(domain.CommunityCriteria{ID: "testCommunityID", IDIsNotNull: true}).
+					Return(domain.Community{}, fmt.Errorf("not exists community"))
 			},
 			args{
 				ctx:    &gin.Context{},
@@ -49,11 +56,18 @@ func Test_communityUseCase_UpdateCommunity(t *testing.T) {
 		{
 			"member is no authorized to update",
 			func(mcr *mock_domain.MockICommunityRepository, mor *mock_domain.MockIOwnerRepository) {
-				mor.EXPECT().SelectOwnerByUserIDAndCommunityID("testUserID", "testCommunityID").Return(domain.Owner{
-					UserID:      "testUserID",
-					CommunityID: "testCommunityID",
-					Role:        domain.Member.String(),
-				}, nil)
+				mor.EXPECT().
+					SelectOwner(domain.OwnerCriteria{
+						UserID:               "testUserID",
+						UserIDIsNotNull:      true,
+						CommunityID:          "testCommunityID",
+						CommunityIDIsNotNull: true,
+					}).
+					Return(domain.Owner{
+						UserID:      "testUserID",
+						CommunityID: "testCommunityID",
+						Role:        domain.Member.String(),
+					}, nil)
 			},
 			args{
 				ctx:    &gin.Context{},
@@ -69,29 +83,34 @@ func Test_communityUseCase_UpdateCommunity(t *testing.T) {
 		{
 			"success",
 			func(mcr *mock_domain.MockICommunityRepository, mor *mock_domain.MockIOwnerRepository) {
-				mor.EXPECT().SelectOwnerByUserIDAndCommunityID("testUserID", "testCommunityID").Return(domain.Owner{
+				mor.EXPECT().SelectOwner(domain.OwnerCriteria{
+					UserID:               "testUserID",
+					UserIDIsNotNull:      true,
+					CommunityID:          "testCommunityID",
+					CommunityIDIsNotNull: true,
+				}).Return(domain.Owner{
 					UserID:      "testUserID",
 					CommunityID: "testCommunityID",
 					Role:        domain.Admin.String(),
 				}, nil)
-				mcr.EXPECT().SelectCommunity("testCommunityID").DoAndReturn(
-					func(id string) (domain.Community, error) {
-						return domain.Community{
+				mcr.EXPECT().
+					SelectCommunity(domain.CommunityCriteria{ID: "testCommunityID", IDIsNotNull: true}).
+					Return(
+						domain.Community{
 							ID:          "testCommunityID",
 							Name:        "testName",
 							Description: "testDescription",
-						}, nil
-					},
-				)
-				mcr.EXPECT().UpdateCommunity(&domain.Community{
-					ID:          "testCommunityID",
-					Name:        "updateTestName",
-					Description: "updateTestDescription",
-				}).DoAndReturn(
-					func(community *domain.Community) error {
-						return nil
-					},
-				)
+						},
+						nil)
+				mcr.EXPECT().
+					UpdateCommunity(&domain.Community{
+						ID:          "testCommunityID",
+						Name:        "updateTestName",
+						Description: "updateTestDescription",
+					}).
+					Return(
+						nil,
+					)
 			},
 			args{
 				ctx:    &gin.Context{},

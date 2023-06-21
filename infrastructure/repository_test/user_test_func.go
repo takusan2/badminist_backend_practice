@@ -19,7 +19,10 @@ func GenInsertUserTestFunc(ur domain.IUserRepository) func(t *testing.T) {
 			t.Fatal(err)
 		}
 		want := id
-		user, err := ur.SelectUser(id)
+		user, err := ur.SelectUser(domain.UserCriteria{
+			ID:          id,
+			IDIsNotNull: true,
+		})
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -37,7 +40,12 @@ func GenDeleteUserTestFunc(ur domain.IUserRepository) func(t *testing.T) {
 		if err != nil {
 			t.Fatal(err)
 		}
-		_, err = ur.SelectUser(InsertUser.ID)
+		_, err = ur.SelectUser(
+			domain.UserCriteria{
+				ID:          InsertUser.ID,
+				IDIsNotNull: true,
+			},
+		)
 		if err == nil {
 			t.Fatal(err)
 		}

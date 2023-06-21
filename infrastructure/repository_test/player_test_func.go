@@ -22,7 +22,12 @@ func GenInsertPlayerTestFunc(pr domain.IPlayerRepository) func(t *testing.T) {
 			t.Fatal(err)
 		}
 		want := id
-		player, err := pr.SelectPlayer(id)
+		player, err := pr.SelectPlayer(
+			domain.PlayerCriteria{
+				ID:          id,
+				IDIsNotNull: true,
+			},
+		)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -46,7 +51,10 @@ func GenDeletePlayerTestFunc(pr domain.IPlayerRepository) func(t *testing.T) {
 		if err != nil {
 			t.Fatal(err)
 		}
-		_, err = pr.SelectPlayer(insertPlayer.ID)
+		_, err = pr.SelectPlayer(domain.PlayerCriteria{
+			ID:          insertPlayer.ID,
+			IDIsNotNull: true,
+		})
 		if err == nil {
 			t.Fatal(err)
 		}

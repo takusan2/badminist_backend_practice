@@ -24,15 +24,15 @@ func (p *playerRepository) InsertPlayer(player *domain.Player) (string, error) {
 	return player.ID, err
 }
 
-func (p *playerRepository) SelectPlayer(id string) (domain.Player, error) {
+func (p *playerRepository) SelectPlayer(criteria domain.PlayerCriteria) (domain.Player, error) {
 	var player domain.Player
-	err := p.db.Select("*").Where("id = ?", id).First(&player).Error
+	err := p.db.Select("*").Where(criteria).First(&player).Error
 	return player, err
 }
 
-func (p *playerRepository) SelectPlayersByCommunityID(communityId string) ([]domain.Player, error) {
+func (p *playerRepository) SelectPlayers(criteria domain.PlayerCriteria) ([]domain.Player, error) {
 	var players []domain.Player
-	err := p.db.Select("*").Where("community_id = ?", communityId).Find(&players).Error
+	err := p.db.Select("*").Where(criteria).Find(&players).Error
 	return players, err
 }
 

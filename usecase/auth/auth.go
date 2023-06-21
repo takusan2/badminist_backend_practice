@@ -46,7 +46,10 @@ func (au *authUseCase) LoginWithEmailAndPassword(ctx *gin.Context, email string,
 	var user domain.User
 
 	// fetch user by email from entity
-	user, err := au.userRepository.SelectUserByEmail(email)
+	user, err := au.userRepository.SelectUser(domain.UserCriteria{
+		Email:          email,
+		EmailIsNotNull: true,
+	})
 	if err != nil {
 		return "", err
 	}

@@ -25,10 +25,18 @@ func (u *User) BeforeCreate(tx *gorm.DB) (err error) {
 	return nil
 }
 
+type UserCriteria struct {
+	ID             string
+	IDIsNotNull    bool
+	Name           string
+	NameIsNotNull  bool
+	Email          string
+	EmailIsNotNull bool
+}
+
 type IUserRepository interface {
 	InsertUser(user *User) (string, error)
-	SelectUser(id string) (User, error)
-	SelectUserByEmail(email string) (User, error)
+	SelectUser(criteria UserCriteria) (User, error)
 	UpdateUser(user *User) error
 	DeleteUser(id string) error
 }

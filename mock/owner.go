@@ -36,21 +36,21 @@ func (m *MockIOwnerRepository) EXPECT() *MockIOwnerRepositoryMockRecorder {
 }
 
 // DeleteOwner mocks base method.
-func (m *MockIOwnerRepository) DeleteOwner(owner domain.Owner) error {
+func (m *MockIOwnerRepository) DeleteOwner(userID, communityID string) error {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "DeleteOwner", owner)
+	ret := m.ctrl.Call(m, "DeleteOwner", userID, communityID)
 	ret0, _ := ret[0].(error)
 	return ret0
 }
 
 // DeleteOwner indicates an expected call of DeleteOwner.
-func (mr *MockIOwnerRepositoryMockRecorder) DeleteOwner(owner interface{}) *gomock.Call {
+func (mr *MockIOwnerRepositoryMockRecorder) DeleteOwner(userID, communityID interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteOwner", reflect.TypeOf((*MockIOwnerRepository)(nil).DeleteOwner), owner)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteOwner", reflect.TypeOf((*MockIOwnerRepository)(nil).DeleteOwner), userID, communityID)
 }
 
 // InsertOwner mocks base method.
-func (m *MockIOwnerRepository) InsertOwner(owner *domain.Owner) error {
+func (m *MockIOwnerRepository) InsertOwner(owner domain.Owner) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "InsertOwner", owner)
 	ret0, _ := ret[0].(error)
@@ -64,48 +64,33 @@ func (mr *MockIOwnerRepositoryMockRecorder) InsertOwner(owner interface{}) *gomo
 }
 
 // SelectOwner mocks base method.
-func (m *MockIOwnerRepository) SelectOwner(owner domain.Owner) (domain.Owner, error) {
+func (m *MockIOwnerRepository) SelectOwner(criteria domain.OwnerCriteria) (domain.Owner, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "SelectOwner", owner)
+	ret := m.ctrl.Call(m, "SelectOwner", criteria)
 	ret0, _ := ret[0].(domain.Owner)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // SelectOwner indicates an expected call of SelectOwner.
-func (mr *MockIOwnerRepositoryMockRecorder) SelectOwner(owner interface{}) *gomock.Call {
+func (mr *MockIOwnerRepositoryMockRecorder) SelectOwner(criteria interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SelectOwner", reflect.TypeOf((*MockIOwnerRepository)(nil).SelectOwner), owner)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SelectOwner", reflect.TypeOf((*MockIOwnerRepository)(nil).SelectOwner), criteria)
 }
 
-// SelectOwnerByUserIDAndCommunityID mocks base method.
-func (m *MockIOwnerRepository) SelectOwnerByUserIDAndCommunityID(userID, communityID string) (domain.Owner, error) {
+// SelectOwners mocks base method.
+func (m *MockIOwnerRepository) SelectOwners(criteria domain.OwnerCriteria) ([]domain.Owner, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "SelectOwnerByUserIDAndCommunityID", userID, communityID)
-	ret0, _ := ret[0].(domain.Owner)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// SelectOwnerByUserIDAndCommunityID indicates an expected call of SelectOwnerByUserIDAndCommunityID.
-func (mr *MockIOwnerRepositoryMockRecorder) SelectOwnerByUserIDAndCommunityID(userID, communityID interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SelectOwnerByUserIDAndCommunityID", reflect.TypeOf((*MockIOwnerRepository)(nil).SelectOwnerByUserIDAndCommunityID), userID, communityID)
-}
-
-// SelectOwnersByCommunityID mocks base method.
-func (m *MockIOwnerRepository) SelectOwnersByCommunityID(communityID string) ([]domain.Owner, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "SelectOwnersByCommunityID", communityID)
+	ret := m.ctrl.Call(m, "SelectOwners", criteria)
 	ret0, _ := ret[0].([]domain.Owner)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
-// SelectOwnersByCommunityID indicates an expected call of SelectOwnersByCommunityID.
-func (mr *MockIOwnerRepositoryMockRecorder) SelectOwnersByCommunityID(communityID interface{}) *gomock.Call {
+// SelectOwners indicates an expected call of SelectOwners.
+func (mr *MockIOwnerRepositoryMockRecorder) SelectOwners(criteria interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SelectOwnersByCommunityID", reflect.TypeOf((*MockIOwnerRepository)(nil).SelectOwnersByCommunityID), communityID)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SelectOwners", reflect.TypeOf((*MockIOwnerRepository)(nil).SelectOwners), criteria)
 }
 
 // UpdateOwner mocks base method.
@@ -146,73 +131,73 @@ func (m *MockIOwnerUseCase) EXPECT() *MockIOwnerUseCaseMockRecorder {
 }
 
 // DeleteOwner mocks base method.
-func (m *MockIOwnerUseCase) DeleteOwner(ctx *gin.Context, userID, communityID string) error {
+func (m *MockIOwnerUseCase) DeleteOwner(ctx *gin.Context, userID, delUserID, delCommunityID string) error {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "DeleteOwner", ctx, userID, communityID)
+	ret := m.ctrl.Call(m, "DeleteOwner", ctx, userID, delUserID, delCommunityID)
 	ret0, _ := ret[0].(error)
 	return ret0
 }
 
 // DeleteOwner indicates an expected call of DeleteOwner.
-func (mr *MockIOwnerUseCaseMockRecorder) DeleteOwner(ctx, userID, communityID interface{}) *gomock.Call {
+func (mr *MockIOwnerUseCaseMockRecorder) DeleteOwner(ctx, userID, delUserID, delCommunityID interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteOwner", reflect.TypeOf((*MockIOwnerUseCase)(nil).DeleteOwner), ctx, userID, communityID)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteOwner", reflect.TypeOf((*MockIOwnerUseCase)(nil).DeleteOwner), ctx, userID, delUserID, delCommunityID)
 }
 
 // InsertOwner mocks base method.
-func (m *MockIOwnerUseCase) InsertOwner(ctx *gin.Context, userID, communityID, Role string) error {
+func (m *MockIOwnerUseCase) InsertOwner(ctx *gin.Context, owner domain.Owner) error {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "InsertOwner", ctx, userID, communityID, Role)
+	ret := m.ctrl.Call(m, "InsertOwner", ctx, owner)
 	ret0, _ := ret[0].(error)
 	return ret0
 }
 
 // InsertOwner indicates an expected call of InsertOwner.
-func (mr *MockIOwnerUseCaseMockRecorder) InsertOwner(ctx, userID, communityID, Role interface{}) *gomock.Call {
+func (mr *MockIOwnerUseCaseMockRecorder) InsertOwner(ctx, owner interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "InsertOwner", reflect.TypeOf((*MockIOwnerUseCase)(nil).InsertOwner), ctx, userID, communityID, Role)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "InsertOwner", reflect.TypeOf((*MockIOwnerUseCase)(nil).InsertOwner), ctx, owner)
 }
 
-// SelectOwner mocks base method.
-func (m *MockIOwnerUseCase) SelectOwner(ctx *gin.Context, userID, communityID string) (domain.Owner, error) {
+// SelectOwnerByUserIDAndCommunityID mocks base method.
+func (m *MockIOwnerUseCase) SelectOwnerByUserIDAndCommunityID(ctx *gin.Context, userID, communityID string) (domain.Owner, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "SelectOwner", ctx, userID, communityID)
+	ret := m.ctrl.Call(m, "SelectOwnerByUserIDAndCommunityID", ctx, userID, communityID)
 	ret0, _ := ret[0].(domain.Owner)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
-// SelectOwner indicates an expected call of SelectOwner.
-func (mr *MockIOwnerUseCaseMockRecorder) SelectOwner(ctx, userID, communityID interface{}) *gomock.Call {
+// SelectOwnerByUserIDAndCommunityID indicates an expected call of SelectOwnerByUserIDAndCommunityID.
+func (mr *MockIOwnerUseCaseMockRecorder) SelectOwnerByUserIDAndCommunityID(ctx, userID, communityID interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SelectOwner", reflect.TypeOf((*MockIOwnerUseCase)(nil).SelectOwner), ctx, userID, communityID)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SelectOwnerByUserIDAndCommunityID", reflect.TypeOf((*MockIOwnerUseCase)(nil).SelectOwnerByUserIDAndCommunityID), ctx, userID, communityID)
 }
 
 // SelectOwnersByCommunityID mocks base method.
-func (m *MockIOwnerUseCase) SelectOwnersByCommunityID(ctx *gin.Context, UserID string) ([]domain.Owner, error) {
+func (m *MockIOwnerUseCase) SelectOwnersByCommunityID(ctx *gin.Context, communityID string) ([]domain.Owner, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "SelectOwnersByCommunityID", ctx, UserID)
+	ret := m.ctrl.Call(m, "SelectOwnersByCommunityID", ctx, communityID)
 	ret0, _ := ret[0].([]domain.Owner)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // SelectOwnersByCommunityID indicates an expected call of SelectOwnersByCommunityID.
-func (mr *MockIOwnerUseCaseMockRecorder) SelectOwnersByCommunityID(ctx, UserID interface{}) *gomock.Call {
+func (mr *MockIOwnerUseCaseMockRecorder) SelectOwnersByCommunityID(ctx, communityID interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SelectOwnersByCommunityID", reflect.TypeOf((*MockIOwnerUseCase)(nil).SelectOwnersByCommunityID), ctx, UserID)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SelectOwnersByCommunityID", reflect.TypeOf((*MockIOwnerUseCase)(nil).SelectOwnersByCommunityID), ctx, communityID)
 }
 
 // UpdateOwner mocks base method.
-func (m *MockIOwnerUseCase) UpdateOwner(ctx *gin.Context, userID, communityID, Role string) error {
+func (m *MockIOwnerUseCase) UpdateOwner(ctx *gin.Context, userID string, owner *domain.Owner) error {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "UpdateOwner", ctx, userID, communityID, Role)
+	ret := m.ctrl.Call(m, "UpdateOwner", ctx, userID, owner)
 	ret0, _ := ret[0].(error)
 	return ret0
 }
 
 // UpdateOwner indicates an expected call of UpdateOwner.
-func (mr *MockIOwnerUseCaseMockRecorder) UpdateOwner(ctx, userID, communityID, Role interface{}) *gomock.Call {
+func (mr *MockIOwnerUseCaseMockRecorder) UpdateOwner(ctx, userID, owner interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateOwner", reflect.TypeOf((*MockIOwnerUseCase)(nil).UpdateOwner), ctx, userID, communityID, Role)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateOwner", reflect.TypeOf((*MockIOwnerUseCase)(nil).UpdateOwner), ctx, userID, owner)
 }

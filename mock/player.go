@@ -65,33 +65,33 @@ func (mr *MockIPlayerRepositoryMockRecorder) InsertPlayer(player interface{}) *g
 }
 
 // SelectPlayer mocks base method.
-func (m *MockIPlayerRepository) SelectPlayer(id string) (domain.Player, error) {
+func (m *MockIPlayerRepository) SelectPlayer(criteria domain.PlayerCriteria) (domain.Player, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "SelectPlayer", id)
+	ret := m.ctrl.Call(m, "SelectPlayer", criteria)
 	ret0, _ := ret[0].(domain.Player)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // SelectPlayer indicates an expected call of SelectPlayer.
-func (mr *MockIPlayerRepositoryMockRecorder) SelectPlayer(id interface{}) *gomock.Call {
+func (mr *MockIPlayerRepositoryMockRecorder) SelectPlayer(criteria interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SelectPlayer", reflect.TypeOf((*MockIPlayerRepository)(nil).SelectPlayer), id)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SelectPlayer", reflect.TypeOf((*MockIPlayerRepository)(nil).SelectPlayer), criteria)
 }
 
-// SelectPlayersByCommunityID mocks base method.
-func (m *MockIPlayerRepository) SelectPlayersByCommunityID(communityID string) ([]domain.Player, error) {
+// SelectPlayers mocks base method.
+func (m *MockIPlayerRepository) SelectPlayers(criteria domain.PlayerCriteria) ([]domain.Player, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "SelectPlayersByCommunityID", communityID)
+	ret := m.ctrl.Call(m, "SelectPlayers", criteria)
 	ret0, _ := ret[0].([]domain.Player)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
-// SelectPlayersByCommunityID indicates an expected call of SelectPlayersByCommunityID.
-func (mr *MockIPlayerRepositoryMockRecorder) SelectPlayersByCommunityID(communityID interface{}) *gomock.Call {
+// SelectPlayers indicates an expected call of SelectPlayers.
+func (mr *MockIPlayerRepositoryMockRecorder) SelectPlayers(criteria interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SelectPlayersByCommunityID", reflect.TypeOf((*MockIPlayerRepository)(nil).SelectPlayersByCommunityID), communityID)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SelectPlayers", reflect.TypeOf((*MockIPlayerRepository)(nil).SelectPlayers), criteria)
 }
 
 // UpdatePlayer mocks base method.
@@ -158,21 +158,6 @@ func (m *MockIPlayerUseCase) InsertPlayer(ctx *gin.Context, player *domain.Playe
 func (mr *MockIPlayerUseCaseMockRecorder) InsertPlayer(ctx, player interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "InsertPlayer", reflect.TypeOf((*MockIPlayerUseCase)(nil).InsertPlayer), ctx, player)
-}
-
-// SelectPlayer mocks base method.
-func (m *MockIPlayerUseCase) SelectPlayer(ctx *gin.Context, id string) (domain.Player, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "SelectPlayer", ctx, id)
-	ret0, _ := ret[0].(domain.Player)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// SelectPlayer indicates an expected call of SelectPlayer.
-func (mr *MockIPlayerUseCaseMockRecorder) SelectPlayer(ctx, id interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SelectPlayer", reflect.TypeOf((*MockIPlayerUseCase)(nil).SelectPlayer), ctx, id)
 }
 
 // SelectPlayersByCommunityID mocks base method.

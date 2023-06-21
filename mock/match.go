@@ -65,63 +65,33 @@ func (mr *MockIMatchRepositoryMockRecorder) InsertMatch(communityID, match inter
 }
 
 // SelectMatch mocks base method.
-func (m *MockIMatchRepository) SelectMatch(id int64) (domain.Match, error) {
+func (m *MockIMatchRepository) SelectMatch(criteria domain.MatchCriteria) (domain.Match, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "SelectMatch", id)
+	ret := m.ctrl.Call(m, "SelectMatch", criteria)
 	ret0, _ := ret[0].(domain.Match)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // SelectMatch indicates an expected call of SelectMatch.
-func (mr *MockIMatchRepositoryMockRecorder) SelectMatch(id interface{}) *gomock.Call {
+func (mr *MockIMatchRepositoryMockRecorder) SelectMatch(criteria interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SelectMatch", reflect.TypeOf((*MockIMatchRepository)(nil).SelectMatch), id)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SelectMatch", reflect.TypeOf((*MockIMatchRepository)(nil).SelectMatch), criteria)
 }
 
-// SelectMatchesByCommunityID mocks base method.
-func (m *MockIMatchRepository) SelectMatchesByCommunityID(communityId string) ([]domain.Match, error) {
+// SelectMatches mocks base method.
+func (m *MockIMatchRepository) SelectMatches(criteria domain.MatchCriteria) ([]domain.Match, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "SelectMatchesByCommunityID", communityId)
+	ret := m.ctrl.Call(m, "SelectMatches", criteria)
 	ret0, _ := ret[0].([]domain.Match)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
-// SelectMatchesByCommunityID indicates an expected call of SelectMatchesByCommunityID.
-func (mr *MockIMatchRepositoryMockRecorder) SelectMatchesByCommunityID(communityId interface{}) *gomock.Call {
+// SelectMatches indicates an expected call of SelectMatches.
+func (mr *MockIMatchRepositoryMockRecorder) SelectMatches(criteria interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SelectMatchesByCommunityID", reflect.TypeOf((*MockIMatchRepository)(nil).SelectMatchesByCommunityID), communityId)
-}
-
-// SelectMatchesByCommunityIDAndDate mocks base method.
-func (m *MockIMatchRepository) SelectMatchesByCommunityIDAndDate(communityId, date string) ([]domain.Match, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "SelectMatchesByCommunityIDAndDate", communityId, date)
-	ret0, _ := ret[0].([]domain.Match)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// SelectMatchesByCommunityIDAndDate indicates an expected call of SelectMatchesByCommunityIDAndDate.
-func (mr *MockIMatchRepositoryMockRecorder) SelectMatchesByCommunityIDAndDate(communityId, date interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SelectMatchesByCommunityIDAndDate", reflect.TypeOf((*MockIMatchRepository)(nil).SelectMatchesByCommunityIDAndDate), communityId, date)
-}
-
-// SelectMatchesByPlayerIDAndDate mocks base method.
-func (m *MockIMatchRepository) SelectMatchesByPlayerIDAndDate(playerID, date string) ([]domain.Match, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "SelectMatchesByPlayerIDAndDate", playerID, date)
-	ret0, _ := ret[0].([]domain.Match)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// SelectMatchesByPlayerIDAndDate indicates an expected call of SelectMatchesByPlayerIDAndDate.
-func (mr *MockIMatchRepositoryMockRecorder) SelectMatchesByPlayerIDAndDate(playerID, date interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SelectMatchesByPlayerIDAndDate", reflect.TypeOf((*MockIMatchRepository)(nil).SelectMatchesByPlayerIDAndDate), playerID, date)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SelectMatches", reflect.TypeOf((*MockIMatchRepository)(nil).SelectMatches), criteria)
 }
 
 // UpdateMatch mocks base method.

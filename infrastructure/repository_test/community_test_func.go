@@ -18,7 +18,10 @@ func GenInsertCommunityTestFunc(cr domain.ICommunityRepository) func(t *testing.
 			t.Fatal(err)
 		}
 		want := id
-		community, err := cr.SelectCommunity(id)
+		community, err := cr.SelectCommunity(domain.CommunityCriteria{
+			ID:          id,
+			IDIsNotNull: true,
+		})
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -36,7 +39,12 @@ func GenDeleteCommunityTestFunc(cr domain.ICommunityRepository) func(t *testing.
 		if err != nil {
 			t.Fatal(err)
 		}
-		_, err = cr.SelectCommunity(InsertCommunity.ID)
+		_, err = cr.SelectCommunity(
+			domain.CommunityCriteria{
+				ID:          InsertCommunity.ID,
+				IDIsNotNull: true,
+			},
+		)
 		if err == nil {
 			t.Fatal(err)
 		}

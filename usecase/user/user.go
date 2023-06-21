@@ -14,7 +14,11 @@ func NewUserUseCase(userRepository domain.IUserRepository) domain.IUserUseCase {
 }
 
 func (u *userUseCase) UpdateUser(ctx *gin.Context, id string, name string) error {
-	user, err := u.userRepository.SelectUser(id)
+	user, err := u.userRepository.SelectUser(
+		domain.UserCriteria{
+			ID:          id,
+			IDIsNotNull: true,
+		})
 	if err != nil {
 		return err
 	}

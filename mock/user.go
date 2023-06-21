@@ -65,33 +65,18 @@ func (mr *MockIUserRepositoryMockRecorder) InsertUser(user interface{}) *gomock.
 }
 
 // SelectUser mocks base method.
-func (m *MockIUserRepository) SelectUser(id string) (domain.User, error) {
+func (m *MockIUserRepository) SelectUser(criteria domain.UserCriteria) (domain.User, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "SelectUser", id)
+	ret := m.ctrl.Call(m, "SelectUser", criteria)
 	ret0, _ := ret[0].(domain.User)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // SelectUser indicates an expected call of SelectUser.
-func (mr *MockIUserRepositoryMockRecorder) SelectUser(id interface{}) *gomock.Call {
+func (mr *MockIUserRepositoryMockRecorder) SelectUser(criteria interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SelectUser", reflect.TypeOf((*MockIUserRepository)(nil).SelectUser), id)
-}
-
-// SelectUserByEmail mocks base method.
-func (m *MockIUserRepository) SelectUserByEmail(email string) (domain.User, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "SelectUserByEmail", email)
-	ret0, _ := ret[0].(domain.User)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// SelectUserByEmail indicates an expected call of SelectUserByEmail.
-func (mr *MockIUserRepositoryMockRecorder) SelectUserByEmail(email interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SelectUserByEmail", reflect.TypeOf((*MockIUserRepository)(nil).SelectUserByEmail), email)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SelectUser", reflect.TypeOf((*MockIUserRepository)(nil).SelectUser), criteria)
 }
 
 // UpdateUser mocks base method.

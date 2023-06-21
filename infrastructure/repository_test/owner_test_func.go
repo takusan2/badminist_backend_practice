@@ -14,11 +14,18 @@ func GenInsertOwnerTestFunc(or domain.IOwnerRepository) func(t *testing.T) {
 			Role:        domain.Admin.String(),
 		}
 
-		err := or.InsertOwner(&insertOwner)
+		err := or.InsertOwner(insertOwner)
 		if err != nil {
 			t.Fatal(err)
 		}
-		owner, err := or.SelectOwner(insertOwner)
+		owner, err := or.SelectOwner(
+			domain.OwnerCriteria{
+				UserID:               insertOwner.UserID,
+				UserIDIsNotNull:      true,
+				CommunityID:          insertOwner.CommunityID,
+				CommunityIDIsNotNull: true,
+			},
+		)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -42,11 +49,18 @@ func GenDeleteOwnerTestFunc(or domain.IOwnerRepository) func(t *testing.T) {
 			Role:        domain.Admin.String(),
 		}
 
-		err := or.DeleteOwner(insertOwner)
+		err := or.DeleteOwner(insertOwner.UserID, insertOwner.CommunityID)
 		if err != nil {
 			t.Fatal(err)
 		}
-		_, err = or.SelectOwner(insertOwner)
+		_, err = or.SelectOwner(
+			domain.OwnerCriteria{
+				UserID:               insertOwner.UserID,
+				UserIDIsNotNull:      true,
+				CommunityID:          insertOwner.CommunityID,
+				CommunityIDIsNotNull: true,
+			},
+		)
 		if err == nil {
 			t.Fatal(err)
 		}

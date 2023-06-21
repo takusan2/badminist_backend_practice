@@ -18,12 +18,27 @@ type Match struct {
 	CreatedAt   time.Time `gorm:"type:timestamp;not null;default:CURRENT_TIMESTAMP;"`
 }
 
+type MatchCriteria struct {
+	ID                   int64
+	IDIsNotNull          bool
+	IsSingles            bool
+	IsSinglesIsNotNull   bool
+	PlayerID1            string
+	PlayerID1IsNotNull   bool
+	PlayerID2            string
+	PlayerID2IsNotNull   bool
+	PlayerID3            string
+	PlayerID3IsNotNull   bool
+	PlayerID4            string
+	PlayerID4IsNotNull   bool
+	CommunityID          string
+	CommunityIDIsNotNull bool
+}
+
 type IMatchRepository interface {
 	InsertMatch(communityID string, match *Match) (int64, error)
-	SelectMatch(id int64) (Match, error)
-	SelectMatchesByCommunityID(communityId string) ([]Match, error)
-	SelectMatchesByCommunityIDAndDate(communityId string, date string) ([]Match, error)
-	SelectMatchesByPlayerIDAndDate(playerID string, date string) ([]Match, error)
+	SelectMatch(criteria MatchCriteria) (Match, error)
+	SelectMatches(criteria MatchCriteria) ([]Match, error)
 	UpdateMatch(match *Match) error
 	DeleteMatch(id int64) error
 }

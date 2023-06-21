@@ -64,34 +64,34 @@ func (mr *MockICommunityRepositoryMockRecorder) InsertCommunity(community interf
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "InsertCommunity", reflect.TypeOf((*MockICommunityRepository)(nil).InsertCommunity), community)
 }
 
-// SelectCommunitiesByUserID mocks base method.
-func (m *MockICommunityRepository) SelectCommunitiesByUserID(userID string) ([]domain.Community, error) {
+// SelectCommunities mocks base method.
+func (m *MockICommunityRepository) SelectCommunities(criteria domain.CommunityCriteria) ([]domain.Community, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "SelectCommunitiesByUserID", userID)
+	ret := m.ctrl.Call(m, "SelectCommunities", criteria)
 	ret0, _ := ret[0].([]domain.Community)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
-// SelectCommunitiesByUserID indicates an expected call of SelectCommunitiesByUserID.
-func (mr *MockICommunityRepositoryMockRecorder) SelectCommunitiesByUserID(userID interface{}) *gomock.Call {
+// SelectCommunities indicates an expected call of SelectCommunities.
+func (mr *MockICommunityRepositoryMockRecorder) SelectCommunities(criteria interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SelectCommunitiesByUserID", reflect.TypeOf((*MockICommunityRepository)(nil).SelectCommunitiesByUserID), userID)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SelectCommunities", reflect.TypeOf((*MockICommunityRepository)(nil).SelectCommunities), criteria)
 }
 
 // SelectCommunity mocks base method.
-func (m *MockICommunityRepository) SelectCommunity(id string) (domain.Community, error) {
+func (m *MockICommunityRepository) SelectCommunity(criteria domain.CommunityCriteria) (domain.Community, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "SelectCommunity", id)
+	ret := m.ctrl.Call(m, "SelectCommunity", criteria)
 	ret0, _ := ret[0].(domain.Community)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // SelectCommunity indicates an expected call of SelectCommunity.
-func (mr *MockICommunityRepositoryMockRecorder) SelectCommunity(id interface{}) *gomock.Call {
+func (mr *MockICommunityRepositoryMockRecorder) SelectCommunity(criteria interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SelectCommunity", reflect.TypeOf((*MockICommunityRepository)(nil).SelectCommunity), id)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SelectCommunity", reflect.TypeOf((*MockICommunityRepository)(nil).SelectCommunity), criteria)
 }
 
 // UpdateCommunity mocks base method.

@@ -26,17 +26,33 @@ func (p *Player) BeforeCreate(tx *gorm.DB) (err error) {
 	return nil
 }
 
+type PlayerCriteria struct {
+	ID                   string
+	IDIsNotNull          bool
+	Name                 string
+	NameIsNotNull        bool
+	Sex                  bool
+	SexIsNotNull         bool
+	Age                  int
+	AgeIsNotNull         bool
+	Level                int
+	LevelIsNotNull       bool
+	Attendance           bool
+	AttendanceIsNotNull  bool
+	CommunityID          string
+	CommunityIDIsNotNull bool
+}
+
 type IPlayerRepository interface {
 	InsertPlayer(player *Player) (string, error)
-	SelectPlayer(id string) (Player, error)
-	SelectPlayersByCommunityID(communityID string) ([]Player, error)
+	SelectPlayer(criteria PlayerCriteria) (Player, error)
+	SelectPlayers(criteria PlayerCriteria) ([]Player, error)
 	UpdatePlayer(player *Player) error
 	DeletePlayer(id string) error
 }
 
 type IPlayerUseCase interface {
 	InsertPlayer(ctx *gin.Context, player *Player) (string, error)
-	SelectPlayer(ctx *gin.Context, id string) (Player, error)
 	SelectPlayersByCommunityID(ctx *gin.Context, communityID string) ([]Player, error)
 	UpdatePlayer(ctx *gin.Context, player *Player) error
 	DeletePlayer(ctx *gin.Context, id string) error
