@@ -2,6 +2,7 @@ package repository
 
 import (
 	"github.com/takuya-okada-01/badminist-backend/domain"
+	"github.com/takuya-okada-01/badminist-backend/utils"
 	"gorm.io/gorm"
 )
 
@@ -25,27 +26,17 @@ func (m *matchRepository) InsertMatch(communityID string, match *domain.Match) (
 	return match.ID, err
 }
 
-func (m *matchRepository) SelectMatch(id int64) (domain.Match, error) {
+func (m *matchRepository) SelectMatch(criteria domain.MatchCriteria) (domain.Match, error) {
 	var match domain.Match
-	err := m.db.Select("*").Where("id = ?", id).First(&match).Error
+	mapCriteria := utils.CriteriaToMap(criteria)
+	err := m.db.Select("*").Where(mapCriteria).First(&match).Error
 	return match, err
 }
 
-func (m *matchRepository) SelectMatchesByCommunityID(communityId string) ([]domain.Match, error) {
+func (m *matchRepository) SelectMatches(criteria domain.MatchCriteria) ([]domain.Match, error) {
 	var matches []domain.Match
-	err := m.db.Select("*").Where("community_id = ?", communityId).Find(&matches).Error
-	return matches, err
-}
-
-func (m *matchRepository) SelectMatchesByCommunityIDAndDate(communityId string, date string) ([]domain.Match, error) {
-	var matches []domain.Match
-	err := m.db.Select("*").Where(map[string]interface{}{"community_id": communityId, "date": date}).Find(&matches).Error
-	return matches, err
-}
-
-func (m *matchRepository) SelectMatchesByPlayerIDAndDate(playerId string, date string) ([]domain.Match, error) {
-	var matches []domain.Match
-	err := m.db.Select("*").Where(map[string]interface{}{"player_id": playerId, "date": date}).Find(&matches).Error
+	mapCriteria := utils.CriteriaToMap(criteria)
+	err := m.db.Select("*").Where(mapCriteria).Find(&matches).Error
 	return matches, err
 }
 

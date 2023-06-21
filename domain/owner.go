@@ -5,17 +5,43 @@ import (
 )
 
 type Owner struct {
-	UserID      string
-	User        User `gorm:"foreignKey:UserID;references:ID"`
-	CommunityID string
+	UserID      string    `gorm:"primary_key;"`
+	User        User      `gorm:"foreignKey:UserID;references:ID"`
+	CommunityID string    `gorm:"primary_key;"`
 	Community   Community `gorm:"foreignKey:CommunityID;references:ID"`
 	Role        string    `gorm:"type:varchar(255);not null;"`
+}
+
+type OwnerCriteria struct {
+	UserID               string
+	UserIDIsNotNull      bool
+	CommunityID          string
+	CommunityIDIsNotNull bool
+	Role                 string
+	RoleIsNotNull        bool
+}
+
+type IOwnerRepository interface {
+	InsertOwner(owner Owner) error
+	SelectOwner(criteria OwnerCriteria) (Owner, error)
+	SelectOwners(criteria OwnerCriteria) ([]Owner, error)
+	UpdateOwner(owner *Owner) error
+	DeleteOwner(userID string, communityID string) error
+}
+
+type IOwnerUseCase interface {
+	InsertOwner(ctx *gin.Context, owner Owner) error
+	SelectOwnersByCommunityID(ctx *gin.Context, communityID string) ([]Owner, error)
+	SelectOwnerByUserIDAndCommunityID(ctx *gin.Context, userID string, communityID string) (Owner, error)
+	UpdateOwner(ctx *gin.Context, userID string, owner *Owner) error
+	DeleteOwner(ctx *gin.Context, userID string, delUserID string, delCommunityID string) error
 }
 
 type Role int
 
 const (
 	Admin Role = iota
+	Staff
 	Member
 )
 
@@ -23,25 +49,11 @@ func (r Role) String() string {
 	switch r {
 	case Admin:
 		return "admin"
+	case Staff:
+		return "staff"
 	case Member:
 		return "member"
 	default:
-		return "Unknown"
+		return "unknown"
 	}
-}
-
-type IOwnerRepository interface {
-	InsertOwner(owner *Owner) error
-	SelectOwner(owner Owner) (Owner, error)
-	SelectOwnersByCommunityID(CommunityID string) ([]Owner, error)
-	UpdateOwner(owner *Owner) error
-	DeleteOwner(owner Owner) error
-}
-
-type IOwnerUseCase interface {
-	InsertOwner(ctx *gin.Context, UserID string, CommunityID string, Role string) error
-	SelectOwner(ctx *gin.Context, UserID string, CommunityID string) (Owner, error)
-	SelectOwnersByCommunityID(ctx *gin.Context, UserID string) ([]Owner, error)
-	UpdateOwner(ctx *gin.Context, UserID string, CommunityID string, Role string) error
-	DeleteOwner(ctx *gin.Context, UserID string, CommunityID string) error
 }

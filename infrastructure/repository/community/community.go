@@ -2,6 +2,7 @@ package repository
 
 import (
 	"github.com/takuya-okada-01/badminist-backend/domain"
+	"github.com/takuya-okada-01/badminist-backend/utils"
 	"gorm.io/gorm"
 )
 
@@ -23,15 +24,17 @@ func (c *communityRepository) InsertCommunity(community *domain.Community) (stri
 	return community.ID, err
 }
 
-func (c *communityRepository) SelectCommunity(id string) (domain.Community, error) {
+func (c *communityRepository) SelectCommunity(criteria domain.CommunityCriteria) (domain.Community, error) {
 	var community domain.Community
-	err := c.db.Select("*").Where("id = ?", id).First(&community).Error
+	mapCriteria := utils.CriteriaToMap(criteria)
+	err := c.db.Select("*").Where(mapCriteria).First(&community).Error
 	return community, err
 }
 
-func (c *communityRepository) SelectCommunities(UserID string) ([]domain.Community, error) {
+func (c *communityRepository) SelectCommunities(criteria domain.CommunityCriteria) ([]domain.Community, error) {
 	var communities []domain.Community
-	err := c.db.Select("*").Where("user_id = ?", UserID).Find(&communities).Error
+	mapCriteria := utils.CriteriaToMap(criteria)
+	err := c.db.Select("*").Where(mapCriteria).Find(&communities).Error
 	return communities, err
 }
 

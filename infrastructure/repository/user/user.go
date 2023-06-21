@@ -2,6 +2,7 @@ package repository
 
 import (
 	"github.com/takuya-okada-01/badminist-backend/domain"
+	"github.com/takuya-okada-01/badminist-backend/utils"
 	"github.com/takuya-okada-01/badminist-backend/utils/crypto"
 	"gorm.io/gorm"
 )
@@ -30,9 +31,10 @@ func (u *userRepository) InsertUser(user *domain.User) (string, error) {
 	return user.ID, err
 }
 
-func (u *userRepository) SelectUser(id string) (domain.User, error) {
+func (u *userRepository) SelectUser(criteria domain.UserCriteria) (domain.User, error) {
 	var user domain.User
-	err := u.db.Select("*").Where("id = ?", id).First(&user).Error
+	mapCriteria := utils.CriteriaToMap(criteria)
+	err := u.db.Select("*").Where(mapCriteria).First(&user).Error
 	return user, err
 }
 

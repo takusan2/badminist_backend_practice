@@ -14,7 +14,6 @@ import (
 )
 
 func Connect() *gorm.DB {
-	var dsn string
 	godotenv.Load(config.ProjectRootPath + "/.env")
 	cfg := sql.Config{
 		User:      os.Getenv("DB_USER"),
@@ -24,9 +23,7 @@ func Connect() *gorm.DB {
 		DBName:    os.Getenv("DB_NAME"),
 		ParseTime: true,
 	}
-	dsn = cfg.FormatDSN()
-	fmt.Print(dsn)
-	// dsn = os.Getenv("DATABASE_URL") + "/?parseTime=true"
+	dsn := cfg.FormatDSN()
 
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {

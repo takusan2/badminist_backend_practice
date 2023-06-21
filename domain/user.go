@@ -8,7 +8,7 @@ import (
 	"gorm.io/gorm"
 )
 
-type tokenString = string
+type TokenString = string
 
 type User struct {
 	ID           string    `gorm:"type:varchar(36);primary_key;"`
@@ -25,10 +25,18 @@ func (u *User) BeforeCreate(tx *gorm.DB) (err error) {
 	return nil
 }
 
+type UserCriteria struct {
+	ID             string
+	IDIsNotNull    bool
+	Name           string
+	NameIsNotNull  bool
+	Email          string
+	EmailIsNotNull bool
+}
+
 type IUserRepository interface {
 	InsertUser(user *User) (string, error)
-	SelectUser(id string) (User, error)
-	SelectUserByEmail(email string) (User, error)
+	SelectUser(criteria UserCriteria) (User, error)
 	UpdateUser(user *User) error
 	DeleteUser(id string) error
 }
@@ -39,7 +47,7 @@ type IUserUseCase interface {
 }
 
 type IAuthUseCase interface {
-	SignUpWithEmailAndPassword(ctx *gin.Context, email string, password string) (tokenString, error)
-	LoginWithEmailAndPassword(ctx *gin.Context, email string, password string) (tokenString, error)
+	SignUpWithEmailAndPassword(ctx *gin.Context, email string, password string) (TokenString, error)
+	LoginWithEmailAndPassword(ctx *gin.Context, email string, password string) (TokenString, error)
 	Logout(ctx *gin.Context) error
 }

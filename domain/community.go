@@ -21,18 +21,27 @@ func (c *Community) BeforeCreate(tx *gorm.DB) (err error) {
 	return nil
 }
 
+type CommunityCriteria struct {
+	ID                   string
+	IDIsNotNull          bool
+	Name                 string
+	NameIsNotNull        bool
+	Description          string
+	DescriptionIsNotNull bool
+}
+
 type ICommunityRepository interface {
 	InsertCommunity(community *Community) (string, error)
-	SelectCommunity(id string) (Community, error)
-	SelectCommunities(UserID string) ([]Community, error)
+	SelectCommunity(criteria CommunityCriteria) (Community, error)
+	SelectCommunities(criteria CommunityCriteria) ([]Community, error)
 	UpdateCommunity(community *Community) error
 	DeleteCommunity(id string) error
 }
 
 type ICommunityUseCase interface {
-	InsertCommunity(ctx *gin.Context, community Community) (string, error)
+	InsertCommunity(ctx *gin.Context, userID string, community Community) (string, error)
 	SelectCommunity(ctx *gin.Context, id string) (Community, error)
-	SelectCommunities(ctx *gin.Context, UserID string) ([]Community, error)
-	UpdateCommunity(ctx *gin.Context, UserID string, community *Community) error
+	SelectCommunitiesByUserID(ctx *gin.Context, userID string) ([]Community, error)
+	UpdateCommunity(ctx *gin.Context, userID string, community *Community) error
 	DeleteCommunity(ctx *gin.Context, id string) error
 }
