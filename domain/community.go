@@ -3,7 +3,6 @@ package domain
 import (
 	"time"
 
-	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 	"gorm.io/gorm"
 )
@@ -21,27 +20,17 @@ func (c *Community) BeforeCreate(tx *gorm.DB) (err error) {
 	return nil
 }
 
-type CommunityCriteria struct {
-	ID                   string
-	IDIsNotNull          bool
-	Name                 string
-	NameIsNotNull        bool
-	Description          string
-	DescriptionIsNotNull bool
+type CommunityResponse struct {
+	ID          string    `json:"id"`
+	Name        string    `json:"name"`
+	Description string    `json:"description"`
+	CreatedAt   time.Time `json:"createdAt"`
+	UpdatedAt   time.Time `json:"updatedAt"`
 }
 
 type ICommunityRepository interface {
 	InsertCommunity(community *Community) (string, error)
-	SelectCommunity(criteria CommunityCriteria) (Community, error)
-	SelectCommunities(criteria CommunityCriteria) ([]Community, error)
+	SelectCommunityByID(id string) (Community, error)
 	UpdateCommunity(community *Community) error
 	DeleteCommunity(id string) error
-}
-
-type ICommunityUseCase interface {
-	InsertCommunity(ctx *gin.Context, userID string, community Community) (string, error)
-	SelectCommunity(ctx *gin.Context, id string) (Community, error)
-	SelectCommunitiesByUserID(ctx *gin.Context, userID string) ([]Community, error)
-	UpdateCommunity(ctx *gin.Context, userID string, community *Community) error
-	DeleteCommunity(ctx *gin.Context, id string) error
 }

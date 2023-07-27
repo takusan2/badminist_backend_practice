@@ -1,50 +1,88 @@
 package controller
 
 import (
-	"github.com/gin-gonic/gin"
+	"net/http"
+	"os"
+	"time"
+
+	"github.com/golang-jwt/jwt/v5"
+	"github.com/labstack/echo/v4"
 	"github.com/takuya-okada-01/badminist-backend/domain"
 )
 
+type AuthController interface {
+	SignUpWithEmailAndPassword(ctx echo.Context) error
+	LoginWithEmailAndPassword(ctx echo.Context) error
+	Logout(ctx echo.Context) error
+	RefreshToken(ctx echo.Context) error
+}
 type authController struct {
-	authUseCase domain.IAuthUseCase
+	au domain.IAuthUseCase
 }
 
-func NewAuthController(router *gin.RouterGroup, authUseCase domain.IAuthUseCase) {
-	ac := &authController{authUseCase: authUseCase}
-	router.POST("/signup", ac.SignUpWithEmailAndPassword)
-	router.POST("/login", ac.LoginWithEmailAndPassword)
-	router.POST("/logout", ac.Logout)
+func NewAuthController(au domain.IAuthUseCase) AuthController {
+	return &authController{au: au}
 }
 
-func (ac *authController) SignUpWithEmailAndPassword(ctx *gin.Context) {
-	email := ctx.PostForm("email")
-	password := ctx.PostForm("password")
-
-	tokenString, err := ac.authUseCase.SignUpWithEmailAndPassword(ctx, email, password)
+func (ac *authController) SignUpWithEmailAndPassword(ctx echo.Context) error {
+	user := domain.User{}
+	if err := ctx.Bind(&user); err != nil {
+		return ctx.JSON(http.StatusBadRequest, err.Error())
+	}
+	_, err := ac.au.SignUpWithEmailAndPassword(user.Email, user.Password)
 	if err != nil {
-		ctx.JSON(500, gin.H{"message": err.Error()})
-		return
+		return ctx.JSON(http.StatusInternalServerError, err.Error())
+	}
+	return ctx.JSON(http.StatusOK, user)
+}
+
+func (ac *authController) LoginWithEmailAndPassword(ctx echo.Context) error {
+	user := domain.User{}
+	if err := ctx.Bind(&user); err != nil {
+		return ctx.JSON(http.StatusBadRequest, err.Error())
+	}
+	tokenString, err := ac.au.LoginWithEmailAndPassword(user.Email, user.Password)
+	if err != nil {
+		return ctx.JSON(http.StatusInternalServerError, err.Error())
 	}
 
-	ctx.SetCookie("AccessToken", tokenString, 3600*24*30, "/", "localhost", false, true)
-	ctx.JSON(200, gin.H{"id": tokenString})
+	ctx.SetCookie(&http.Cookie{
+		Name:     "token",
+		Value:    tokenString,
+		Path:     "/",
+		Domain:   os.Getenv("API_DOMAIN"),
+		Expires:  time.Now().Add(24 * time.Hour),
+		MaxAge:   60 * 60 * 24,
+		Secure:   false,
+		HttpOnly: true,
+		SameSite: http.SameSiteLaxMode,
+	})
+
+	return ctx.JSON(http.StatusOK, user)
 }
 
-func (ac *authController) LoginWithEmailAndPassword(ctx *gin.Context) {
-	email := ctx.PostForm("email")
-	password := ctx.PostForm("password")
-
-	tokenString, err := ac.authUseCase.LoginWithEmailAndPassword(ctx, email, password)
-	if err != nil {
-		ctx.JSON(500, gin.H{"message": err.Error()})
-		return
-	}
-
-	ctx.SetCookie("AccessToken", tokenString, 3600*24*30, "/", "localhost", false, true)
-	ctx.JSON(200, gin.H{"id": tokenString})
+func (ac *authController) Logout(ctx echo.Context) error {
+	ctx.SetCookie(&http.Cookie{
+		Name:     "token",
+		Value:    "",
+		Path:     "/",
+		Domain:   os.Getenv("API_DOMAIN"),
+		Expires:  time.Now(),
+		MaxAge:   -1,
+		Secure:   false,
+		HttpOnly: true,
+		SameSite: http.SameSiteLaxMode,
+	})
+	return ctx.NoContent(http.StatusOK)
 }
 
-func (ac *authController) Logout(ctx *gin.Context) {
-	ac.authUseCase.Logout(ctx)
-	ctx.JSON(200, gin.H{"message": "logout"})
+func (ac *authController) RefreshToken(ctx echo.Context) error {
+	return nil
+}
+
+func GetCurrentUser(ctx echo.Context) string {
+	user := ctx.Get("user").(*jwt.Token)
+	userClaims := user.Claims.(jwt.MapClaims)
+	userID := userClaims["user_id"].(string)
+	return userID
 }

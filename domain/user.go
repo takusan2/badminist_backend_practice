@@ -3,7 +3,6 @@ package domain
 import (
 	"time"
 
-	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 	"gorm.io/gorm"
 )
@@ -11,13 +10,13 @@ import (
 type TokenString = string
 
 type User struct {
-	ID           string    `gorm:"type:varchar(36);primary_key;"`
-	Name         string    `gorm:"type:varchar(255);not null;"`
-	Email        string    `gorm:"type:varchar(255);not null;unique;"`
-	PasswordHash string    `gorm:"type:varchar(255);not null;"`
-	Salt         string    `gorm:"type:varchar(255);not null;"`
-	CreatedAt    time.Time `gorm:"type:timestamp;not null;default:CURRENT_TIMESTAMP;"`
-	UpdatedAt    time.Time `gorm:"type:timestamp;not null;default:CURRENT_TIMESTAMP;"`
+	ID        string    `json:"id" gorm:"type:varchar(36);primary_key;"`
+	Name      string    `json:"name" gorm:"type:varchar(255);not null;"`
+	Email     string    `json:"email" gorm:"type:varchar(255);not null;unique;"`
+	Password  string    `json:"password" gorm:"type:varchar(255);not null;"`
+	Salt      string    `json:"salt" gorm:"type:varchar(255);not null;"`
+	CreatedAt time.Time `json:"created_at" gorm:"type:timestamp;not null;default:CURRENT_TIMESTAMP;"`
+	UpdatedAt time.Time `json:"updated_at" gorm:"type:timestamp;not null;default:CURRENT_TIMESTAMP;"`
 }
 
 func (u *User) BeforeCreate(tx *gorm.DB) (err error) {
@@ -25,29 +24,23 @@ func (u *User) BeforeCreate(tx *gorm.DB) (err error) {
 	return nil
 }
 
-type UserCriteria struct {
-	ID             string
-	IDIsNotNull    bool
-	Name           string
-	NameIsNotNull  bool
-	Email          string
-	EmailIsNotNull bool
+type UserResopnse struct {
+	ID        string `json:"id"`
+	Name      string `json:"name"`
+	Email     string `json:"email"`
+	CreatedAt string `json:"created_at"`
+	UpdatedAt string `json:"updated_at"`
 }
 
 type IUserRepository interface {
 	InsertUser(user *User) (string, error)
-	SelectUser(criteria UserCriteria) (User, error)
+	SelectUser(id string) (User, error)
+	SelectUserByEmail(mail string) (User, error)
 	UpdateUser(user *User) error
 	DeleteUser(id string) error
 }
 
-type IUserUseCase interface {
-	UpdateUser(ctx *gin.Context, id string, name string) error
-	DeleteUser(ctx *gin.Context, id string) error
-}
-
 type IAuthUseCase interface {
-	SignUpWithEmailAndPassword(ctx *gin.Context, email string, password string) (TokenString, error)
-	LoginWithEmailAndPassword(ctx *gin.Context, email string, password string) (TokenString, error)
-	Logout(ctx *gin.Context) error
+	SignUpWithEmailAndPassword(email string, password string) (TokenString, error)
+	LoginWithEmailAndPassword(email string, password string) (TokenString, error)
 }
