@@ -9,7 +9,6 @@ import (
 type UserController interface {
 	SelectUser(ctx echo.Context) error
 	UpdateUser(ctx echo.Context) error
-	DeleteUser(ctx echo.Context) error
 }
 type userController struct {
 	uu usecase.UserUseCase
@@ -45,13 +44,4 @@ func (uc *userController) UpdateUser(ctx echo.Context) error {
 		return ctx.JSON(500, err.Error())
 	}
 	return ctx.JSON(200, resUser)
-}
-
-func (uc *userController) DeleteUser(ctx echo.Context) error {
-	userID := GetCurrentUser(ctx)
-	err := uc.uu.DeleteUser(userID)
-	if err != nil {
-		return ctx.JSON(500, err.Error())
-	}
-	return ctx.JSON(200, map[string]string{"message": "success"})
 }

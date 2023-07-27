@@ -20,16 +20,15 @@ func NewRouter(
 	e.POST("/login", ac.LoginWithEmailAndPassword)
 	e.POST("/logout", ac.Logout)
 
-	ug := e.Group("/user")
+	ug := e.Group("/users")
 	ug.Use(echojwt.WithConfig(echojwt.Config{
 		SigningKey:  []byte(os.Getenv("SECRET_KEY")),
 		TokenLookup: "cookie:token",
 	}))
 	ug.GET("", uc.SelectUser)
 	ug.PUT("/:id", uc.UpdateUser)
-	ug.DELETE("/:id", uc.DeleteUser)
 
-	cg := e.Group("/community")
+	cg := e.Group("/communities")
 	cg.Use(echojwt.WithConfig(echojwt.Config{
 		SigningKey:  []byte(os.Getenv("SECRET_KEY")),
 		TokenLookup: "cookie:token",
@@ -39,16 +38,16 @@ func NewRouter(
 	cg.GET("", cc.SelectCommunitiesByUserID)
 	cg.DELETE("/:id", cc.DeleteCommunity)
 
-	og := e.Group("/owner")
+	og := e.Group("/owners")
 	og.Use(echojwt.WithConfig(echojwt.Config{
 		SigningKey:  []byte(os.Getenv("SECRET_KEY")),
 		TokenLookup: "cookie:token",
 	}))
 	og.POST("", oc.InsertOwner)
-	og.GET("", oc.SelectOwnersByCommunityID)
+	og.GET("/:id", oc.SelectOwnersByCommunityID)
 	og.DELETE("", oc.DeleteOwner)
 
-	pg := e.Group("/player")
+	pg := e.Group("/players")
 	pg.Use(echojwt.WithConfig(echojwt.Config{
 		SigningKey:  []byte(os.Getenv("SECRET_KEY")),
 		TokenLookup: "cookie:token",
