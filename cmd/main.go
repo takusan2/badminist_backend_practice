@@ -1,36 +1,37 @@
 package main
 
 import (
-	"fmt"
-	"os"
-
-	"github.com/gin-contrib/sessions"
-	"github.com/gin-contrib/sessions/cookie"
-	"github.com/gin-gonic/gin"
-	"github.com/joho/godotenv"
-	"github.com/takuya-okada-01/badminist-backend/config"
 	"github.com/takuya-okada-01/badminist-backend/controller"
 	"github.com/takuya-okada-01/badminist-backend/infrastructure/database"
-	user_repository "github.com/takuya-okada-01/badminist-backend/infrastructure/repository/user"
-	auth_usecase "github.com/takuya-okada-01/badminist-backend/usecase/auth"
+	"github.com/takuya-okada-01/badminist-backend/infrastructure/repository"
+	"github.com/takuya-okada-01/badminist-backend/router"
+	"github.com/takuya-okada-01/badminist-backend/usecase"
+	"github.com/takuya-okada-01/badminist-backend/validator"
 )
 
 func main() {
-	godotenv.Load(config.ProjectRootPath + "/.env")
-
 	db := database.Connect()
-	defer fmt.Print("db closed\n")
+	defer database.CloseDB(db)
 
-	router := gin.Default()
-	store := cookie.NewStore([]byte(os.Getenv("SECRET_KEY")))
-	router.Use(sessions.Sessions("AccessToken", store))
+	ur := repository.NewUserRepository(db)
+	cr := repository.NewCommunityRepository(db)
+	or := repository.NewOwnerRepository(db)
+	pr := repository.NewPlayerRepository(db)
 
-	ur := user_repository.NewUserRepository(db)
+	uv := validator.NewUserValidator()
 
-	au := auth_usecase.NewAuthUseCase(ur)
-	v1 := router.Group("/")
-	controller.NewAuthController(v1, au)
+	uu := usecase.NewUserUseCase(ur, uv)
+	au := usecase.NewAuthUseCase(ur)
+	cu := usecase.NewCommunityUseCase(cr, or)
+	ou := usecase.NewOwnerUseCase(or, cr)
+	pu := usecase.NewPlayerUseCase(pr, or)
 
-	router.Run()
+	ac := controller.NewAuthController(au)
+	uc := controller.NewUserController(uu)
+	cc := controller.NewCommunityController(cu)
+	oc := controller.NewOwnerController(ou)
+	pc := controller.NewPlayerController(pu)
 
+	e := router.NewRouter(ac, uc, cc, oc, pc)
+	e.Logger.Fatal(e.Start(":8080"))
 }

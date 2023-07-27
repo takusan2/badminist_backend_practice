@@ -1,57 +1,57 @@
 package controller
 
 import (
-	"github.com/gin-gonic/gin"
-	"github.com/takuya-okada-01/badminist-backend/controller/dto"
+	"github.com/labstack/echo/v4"
 	"github.com/takuya-okada-01/badminist-backend/domain"
+	"github.com/takuya-okada-01/badminist-backend/usecase"
 )
 
+type UserController interface {
+	SelectUser(ctx echo.Context) error
+	UpdateUser(ctx echo.Context) error
+	DeleteUser(ctx echo.Context) error
+}
 type userController struct {
-	userUseCase domain.IUserUseCase
+	uu usecase.UserUseCase
 }
 
-func NewUserController(router gin.RouterGroup, userUseCase domain.IUserUseCase) {
-	uc := &userController{userUseCase: userUseCase}
-	router.PUT("/user", uc.UpdateUser)
-	router.DELETE("/user", uc.DeleteUser)
+func NewUserController(uu usecase.UserUseCase) UserController {
+	return &userController{uu: uu}
 }
 
-func (uc *userController) UpdateUser(ctx *gin.Context) {
-	userID, ok := ctx.Keys["user_id"].(string)
-	if !ok {
-		ctx.JSON(500, gin.H{"message": "user not found"})
-		return
+func (uc *userController) SelectUser(ctx echo.Context) error {
+	userID := GetCurrentUser(ctx)
+	resUser, err := uc.uu.SelectUser(userID)
+	if err != nil {
+		return ctx.JSON(500, err.Error())
+	}
+	return ctx.JSON(200, resUser)
+}
+
+func (uc *userController) UpdateUser(ctx echo.Context) error {
+	userID := GetCurrentUser(ctx)
+	paramUserID := ctx.Param("id")
+	if userID != paramUserID {
+		return ctx.JSON(400, map[string]string{"message": "invalid user id"})
 	}
 
-	var user dto.UserRequest
-	ctx.BindJSON(&user)
-
-	err := uc.userUseCase.UpdateUser(
-		ctx,
+	user := domain.User{}
+	ctx.Bind(&user)
+	resUser, err := uc.uu.UpdateUser(
 		userID,
-		user.Name,
+		user,
 	)
-
 	if err != nil {
-		ctx.JSON(500, gin.H{"message": err.Error()})
-		return
+		return ctx.JSON(500, err.Error())
 	}
-
-	ctx.JSON(200, gin.H{"message": "success"})
+	return ctx.JSON(200, resUser)
 }
 
-func (uc *userController) DeleteUser(ctx *gin.Context) {
-	userID, ok := ctx.Keys["user_id"].(string)
-	if !ok {
-		ctx.JSON(500, gin.H{"message": "user not found"})
-		return
-	}
-
-	err := uc.userUseCase.DeleteUser(ctx, userID)
+func (uc *userController) DeleteUser(ctx echo.Context) error {
+	userID := GetCurrentUser(ctx)
+	err := uc.uu.DeleteUser(userID)
 	if err != nil {
-		ctx.JSON(500, gin.H{"message": err.Error()})
-		return
+		return ctx.JSON(500, err.Error())
 	}
-
-	ctx.JSON(200, gin.H{"message": "success"})
+	return ctx.JSON(200, map[string]string{"message": "success"})
 }
